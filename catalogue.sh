@@ -8,6 +8,7 @@ echo -e "\e[36m>>>>>>>>> Add Application User <<<<<<<<<<\e[0m"
 useradd roboshop
 
 echo -e "\e[36m>>>>>>>>> Create Application Directory <<<<<<<<<<\e[0m"
+rm -rf /app
 mkdir /app
 
 echo -e "\e[36m>>>>>>>>> Download App content <<<<<<<<<<\e[0m"
@@ -21,7 +22,7 @@ echo -e "\e[36m>>>>>>>>> Install NodeJS Dependencies <<<<<<<<<<\e[0m"
 npm install
 
 echo -e "\e[36m>>>>>>>>> Copy Catalogue SystemD file <<<<<<<<<<\e[0m"
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service
 
 echo -e "\e[36m>>>>>>>>> Start Catalogue Service <<<<<<<<<<\e[0m"
 
