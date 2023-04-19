@@ -39,3 +39,5 @@ yum install mongodb-org-shell -y
 echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<<<\e[0m"
 mongo --host mongodb-dev.bhaskar77.online </app/schema/catalogue.js
 
+
+
