@@ -1,11 +1,6 @@
-script=$(realpath "$0")
 
-realpath $0
-
-exit
-
-script_path=$(dirname "$SCRIPT")
 source ${script_path}/common.sh
+
 echo -e "\e[36m>>>>>>>>> Install NodeJs repos <<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
