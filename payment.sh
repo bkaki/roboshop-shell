@@ -1,4 +1,5 @@
-source common.sh
+script_path=$(dirname $0)
+source ${script_path}/common.sh
 
 echo -e "\e[36m>>>>>>>>> Install Python <<<<<<<<<<\e[0m"
 yum install python36 gcc python3-devel -y
@@ -23,7 +24,7 @@ pip3.6 install -r requirements.txt
 
 echo -e "\e[36m>>>>>>>>> setup  systemd service <<<<<<<<<<\e[0m"
 
-cp /home/centos/roboshop-shell/payment.service /etc/systemd/system/payment.service
+cp ${script_path}/payment.service /etc/systemd/system/payment.service
 
 echo -e "\e[36m>>>>>>>>> Start payment service <<<<<<<<<<\e[0m"
 

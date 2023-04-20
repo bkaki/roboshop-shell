@@ -1,4 +1,5 @@
-source common.sh
+script_path=$(dirname $0)
+source ${script_path}/common.sh
 
 echo -e "\e[36m>>>>>>>>> Install Maven <<<<<<<<<<\e[0m"
 yum install maven -y
@@ -26,7 +27,7 @@ yum install mysql -y
 
 echo -e "\e[36m>>>>>>>>> setup systemd services <<<<<<<<<<\e[0m"
 
-cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
+cp ${script_path}/shipping.service /etc/systemd/system/shipping.service
 
 echo -e "\e[36m>>>>>>>>> Load schema <<<<<<<<<<\e[0m"
 mysql -h mysql-dev.bhaskar77.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
