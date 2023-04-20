@@ -1,7 +1,7 @@
 source common.sh
 
 pwd
-wxit
+exit
 
 echo -e "\e[36m>>>>>>>>> Install NodeJs repos <<<<<<<<<<\e[0m"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
