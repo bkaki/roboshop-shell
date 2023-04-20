@@ -1,6 +1,6 @@
 source common.sh
 
-pwd
+dirname $0
 exit
 
 echo -e "\e[36m>>>>>>>>> Install NodeJs repos <<<<<<<<<<\e[0m"
