@@ -1,7 +1,6 @@
 script_path=$(dirname $0)
 source ${script_path}/common.sh
 
-pwd
 exit
 
 echo -e "\e[36m>>>>>>>>> Install NodeJs repos <<<<<<<<<<\e[0m"
