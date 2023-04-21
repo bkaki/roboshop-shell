@@ -1,6 +1,6 @@
 source common.sh
 
-pwd
+dirname $0
 
 exit
 
