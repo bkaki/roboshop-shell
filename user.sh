@@ -1,6 +1,6 @@
 
-script_path= $(dirname $0)dirname $0
-source ${cript_path}s/common.sh
+script_path= $(dirname $0)
+source ${cript_path}/common.sh
 
 exit
 
