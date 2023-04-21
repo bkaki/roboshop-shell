@@ -1,6 +1,6 @@
 script=$(realpath "$0")
 
-echo realpath $0
+realpath $0
 
 exit
 
