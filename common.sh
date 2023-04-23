@@ -3,7 +3,7 @@ script=$(realpath "$0")
 script_path=$(dirname "$script")
 
 print_head() {
-  echo echo -e "\e[36m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
+  echo -e "\e[36m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
 
 }
 
@@ -28,10 +28,10 @@ func_nodejs() {
   print_head "unzip App content"
   unzip /tmp/${component}.zip
 
-  echo -e "\e[36m>>>>>>>>> Install npm dependencies <<<<<<<<<<\e[0m"
+  print_head "Install npm dependencies"
   npm install
 
-  echo -e "\e[36m>>>>>>>>> Copy cart systemd file <<<<<<<<<<\e[0m"
+  print_head "Copy cart systemd file"
   cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
 
   systemctl daemon-reload
