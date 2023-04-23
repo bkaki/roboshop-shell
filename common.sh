@@ -2,25 +2,30 @@ app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 
+print_head() {
+  echo echo -e "\e[36m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
+
+}
+
 func_nodejs() {
-  echo -e "\e[36m>>>>>>>>> Install NodeJs repos <<<<<<<<<<\e[0m"
+ print_head "Install NodeJs repos"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-  echo -e "\e[36m>>>>>>>>> Install NodeJs <<<<<<<<<<\e[0m"
+  print_head "Install NodeJs"
   yum install nodejs -y
 
-  echo -e "\e[36m>>>>>>>>> Create Application cart <<<<<<<<<<\e[0m"
+  print_head "Create Application cart"
   useradd ${app_user}
 
-  echo -e "\e[36m>>>>>>>>> Create Application directory <<<<<<<<<<\e[0m"
+  print_head "Create Application directory"
   rm -rf /app
   mkdir /app
 
-  echo -e "\e[36m>>>>>>>>> Create App content <<<<<<<<<<\e[0m"
+  print_head "Create App content"
   curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
   cd /app
 
-  echo -e "\e[36m>>>>>>>>> unzip App content <<<<<<<<<<\e[0m"
+  print_head "unzip App content"
   unzip /tmp/${component}.zip
 
   echo -e "\e[36m>>>>>>>>> Install npm dependencies <<<<<<<<<<\e[0m"
