@@ -6,6 +6,8 @@ mysql_root_password=$1
 if [ -z "$mysql_root_password" ]; then
   echo Input mysql root password Missing
   exit
+fi
+
 
 echo -e "\e[36m>>>>>>>>> Disable MySQl 8 version <<<<<<<<<<\e[0m"
 dnf module disable mysql -y

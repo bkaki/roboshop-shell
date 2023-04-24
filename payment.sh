@@ -6,8 +6,7 @@ rabbitmq_appuser_password=$1
 if [ -z "$rabbitmq_appuser_password" ]; then
   echo Input rabbitmq appuser password Missing
   exit
-
-
+fi
 
 echo -e "\e[36m>>>>>>>>> Install Python <<<<<<<<<<\e[0m"
 yum install python36 gcc python3-devel -y
