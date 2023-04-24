@@ -12,7 +12,7 @@ component="shipping"
 
 schema_steup=mysql
 
-func_java()
+func_java
 
 
 
