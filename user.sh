@@ -1,10 +1,27 @@
-script=$(realpath "$0")
-script_path=$(dirname "$script")
-source ${script_path}/common.sh
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-component=user
+yum install nodejs -y
 
-schema_setup=mongo
+useradd roboshop
 
-func_nodejs
+mkdir /app
 
+curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
+cd /app
+unzip /tmp/user.zip
+
+cd /app
+npm install
+
+cp user.service /etc/systemd/system/user.service
+
+systemctl daemon-reload
+
+systemctl enable user
+systemctl start user
+
+cp mongo.repo /etc/yum.repos.d/mongo.repo
+
+yum install mongodb-org-shell -y
+
+mongo --host mongodb-dev.bhaskar77.online </app/schema/user.js

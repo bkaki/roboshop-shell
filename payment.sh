@@ -1,41 +1,13 @@
-script=$(realpath "$0")
-script_path=$(dirname "$script")
-source ${script_path}/common.sh
-rabbitmq_appuser_password=$1
-
-if [ -z "$rabbitmq_appuser_password" ]; then
-  echo Input rabbitmq appuser password Missing
-  exit
-fi
-
-func_print_head "\e[36m>>>>>>>>> Install Python <<<<<<<<<<\e[0m"
 yum install python36 gcc python3-devel -y
-
-func_print_head "\e[36m>>>>>>>>> Add application User <<<<<<<<<<\e[0m"
-useradd ${app_user}
-
-func_print_head "\e[36m>>>>>>>>> Add application directory <<<<<<<<<<\e[0m"
-rm -rf /app
+useradd roboshop
 mkdir /app
-
-func_print_head "\e[36m>>>>>>>>> Add app content <<<<<<<<<<\e[0m"
 curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment.zip
 cd /app
-
-func_print_head "\e[36m>>>>>>>>> Unzip app content <<<<<<<<<<\e[0m"
 unzip /tmp/payment.zip
-
-func_print_head "\e[36m>>>>>>>>> Install  dependencies <<<<<<<<<<\e[0m"
-
+cd /app
 pip3.6 install -r requirements.txt
-
-func_print_head "\e[36m>>>>>>>>> setup  systemd service <<<<<<<<<<\e[0m"
-sed -i -e "s|rabbitmq_appuser_password|${rabbitmq_appuser_password}|" ${script_path}/payment.service
-
-cp ${script_path}/payment.service /etc/systemd/system/payment.service
-
-func_print_head "\e[36m>>>>>>>>> Start payment service <<<<<<<<<<\e[0m"
-
+cp payment.service /etc/systemd/system/payment.service
 systemctl daemon-reload
+
 systemctl enable payment
-systemctl restart payment
+systemctl start payment

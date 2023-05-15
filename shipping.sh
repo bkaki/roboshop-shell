@@ -1,19 +1,21 @@
-script=$(realpath "$0")
-script_path=$(dirname "$script")
-source ${script_path}/common.sh
-mysql_root_password=$1
+yum install maven -y
+useradd roboshop
+mkdir /app
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping.zip
+cd /app
+unzip /tmp/shipping.zip
+cd /app
+mvn clean package
+mv target/shipping-1.0.jar shipping.jar
 
-if [ -z "$mysql_root_password" ]; then
-  echo Input mysql root password Missing
-  exit
-fi
-
-component="shipping"
-
-schema_steup=mysql
-
-func_java
+cp shipping.service /etc/systemd/system/shipping.service
+systemctl enable shipping
+systemctl start shipping
 
 
+yum install mysql -y
+mysql -h mysql-dev.bhaskar77.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
+
+systemctl restart shipping
 
 

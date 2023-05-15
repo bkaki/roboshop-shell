@@ -1,14 +1,27 @@
-script=$(realpath "$0")
-script_path=$(dirname "$script")
-source ${script_path}/common.sh
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-component=catalogue
+yum install nodejs -y
 
-schema_setup=mongo
+useradd roboshop
 
-func_nodejs
+mkdir /app
 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
+cd /app
+unzip /tmp/catalogue.zip
 
+cd /app
+npm install
 
+cp calalogue.service /etc/systemd/system/catalogue.service
 
+systemctl daemon-reload
 
+systemctl enable catalogue
+systemctl start catalogue
+
+cp mongo.repo /etc/yum.repos.d/mongo.repo
+
+yum install mongodb-org-shell -y
+
+mongo --host mongodb-dev.bhaskar77.online </app/schema/catalogue.js
