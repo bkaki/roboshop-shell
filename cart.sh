@@ -24,7 +24,9 @@ npm install
 echo -e "\e[36m>>>>>>>> Copy Cart SystemD file <<<<<<<<<<<\e[0m"
 cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service
 
-echo -e "\e[36m>>>>>>>> Start Catalogue service  <<<<<<<<\e[0m"
+echo -e "\e[36m>>>>>>>> Start cart service  <<<<<<<<\e[0m"
 systemctl daemon-reload
 systemctl enable cart
 systemctl restart cart
+
+
