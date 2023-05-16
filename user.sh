@@ -15,10 +15,10 @@ echo -e "\e[36m>>>>>>>>>>> download app content <<<<<<<<<\e[0m"
 curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
 
 echo -e "\e[36m>>>>>>>>>>> Unzip app content <<<<<<<<<\e[0m"
+cd /app
 unzip /tmp/user.zip
 
 echo -e "\e[36m>>>>>>>>> Install NodJS dependencies <<<<<<<<<\e[0m"
-cd /app
 npm install
 
 echo -e "\e[36m>>>>>>>> Copy User SystemD file <<<<<<<<<<<\e[0m"
