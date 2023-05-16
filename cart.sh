@@ -22,7 +22,7 @@ echo -e "\e[36m>>>>>>>>> Install NodJS dependencies <<<<<<<<<\e[0m"
 npm install
 
 echo -e "\e[36m>>>>>>>> Copy Cart SystemD file <<<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/Cart.service /etc/systemd/system/Cart.service
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service
 
 echo -e "\e[36m>>>>>>>> Start Catalogue service  <<<<<<<<\e[0m"
 systemctl daemon-reload
