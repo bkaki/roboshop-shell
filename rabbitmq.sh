@@ -13,6 +13,7 @@ curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/sc
 echo -e "\e[36m>>>>>>>>>> Install Rabbitmq <<<<<<<<<<\e[0m"
 
 yum install rabbitmq-server -y
+
 echo -e "\e[36m>>>>>>>>>> Start system files <<<<<<<<<<\e[0m"
 
 systemctl enable rabbitmq-server
