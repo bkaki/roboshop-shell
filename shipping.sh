@@ -25,11 +25,6 @@ echo -e "\e[36m>>>>>>>>> Download Maven Dependencies <<<<<<<<<<\e[0m"
 mvn clean package
 mv target/shipping-1.0.jar shipping.jar
 
-echo -e "\e[36m>>>>>>>>> Copy systemd service file <<<<<<<<<<\e[0m"
-
-
-cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
-
 echo -e "\e[36m>>>>>>>>> Install Mysql <<<<<<<<<<\e[0m"
 
 yum install mysql -y
@@ -37,6 +32,11 @@ yum install mysql -y
 echo -e "\e[36m>>>>>>>>> Load schema <<<<<<<<<<\e[0m"
 
 mysql -h mysql-dev.bhaskar77.online -uroot -pRoboShop@1 < /app/schema/shipping.sql
+
+echo -e "\e[36m>>>>>>>>> Copy systemd service file <<<<<<<<<<\e[0m"
+
+
+cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
 
 echo -e "\e[36m>>>>>>>>> Restart service file <<<<<<<<<<\e[0m"
 
