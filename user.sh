@@ -1,6 +1,6 @@
 source common.sh
 
-dirname
+dirname $0
 Exit
 
 
