@@ -1,7 +1,6 @@
 source common.sh
 
 dirname
-
 Exit
 
 
