@@ -1,7 +1,7 @@
 source common.sh
 
 dirname $0
-Exit
+exit
 
 
 echo -e "\e[36m>>>>>>>>> Configuring NodeJs Repos <<<<<<<<<<\e[0m"
