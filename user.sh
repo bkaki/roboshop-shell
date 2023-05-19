@@ -1,5 +1,10 @@
 source common.sh
 
+dirname
+
+Exit1
+
+
 echo -e "\e[36m>>>>>>>>> Configuring NodeJs Repos <<<<<<<<<<\e[0m"
 
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
