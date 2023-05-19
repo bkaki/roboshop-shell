@@ -21,7 +21,7 @@ echo -e "\e[36m>>>>>>>>> Install Python dependencies <<<<<<<<<<\e[0m"
 pip3.6 install -r requirements.txt
 
 echo -e "\e[36m>>>>>>>>> Copy Systemd service  <<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/payment.service /etc/systemd/system/payment.service
+cp ${script_path}/payment.service /etc/systemd/system/payment.service
 
 echo -e "\e[36m>>>>>>>>> start payment service <<<<<<<<<<\e[0m"
 

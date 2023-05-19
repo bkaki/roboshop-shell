@@ -3,7 +3,7 @@ echo -e "\e[36m>>>>>>>>> Disable mysql 8 version <<<<<<<<<<\e[0m"
 dnf module disable mysql -y
 
 echo -e "\e[36m>>>>>>>>> copy mysql repo <<<<<<<<<<\e[0m"
-cp /home/centos/roboshop-shell/mysql.repo /etc/yum.repos.d/mysql.repo
+cp ${script_path}/mysql.repo /etc/yum.repos.d/mysql.repo
 
 echo -e "\e[36m>>>>>>>>> Install mysql  <<<<<<<<<<\e[0m"
 
