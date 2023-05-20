@@ -1,4 +1,8 @@
-script_path=$(dirname $0)
+script=$(realpath "$0")
+
+echo realpath $0
+exit
+script_path=$(dirname "$SCRIPT")
 source ${script_path}/common.sh
 
 echo -e "\e[36m>>>>>>>>> Configuring NodeJs Repos <<<<<<<<<<\e[0m"
