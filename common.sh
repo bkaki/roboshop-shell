@@ -6,6 +6,18 @@ print_head () {
   echo -e "\e[35m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
 }
 
+schema_setup() {
+echo -e "\e[36m>>>>>>>>>> Copy MongoDB Repo  <<<<<<<<\e[0m"
+cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
+
+echo -e "\e[36m>>>>>>>> Install Mongodb client >>>>>>\e[om"
+
+yum install mongodb-org-shell -y
+
+echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<<\e[0m"
+mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js
+}
+
 func_nodejs() {
 print_head "configuring NodeJS repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
@@ -38,5 +50,6 @@ print_head "Start Catalogue service"
 systemctl daemon-reload
 systemctl enable ${component}
 systemctl restart ${component}
+schema_setup
 
 }
