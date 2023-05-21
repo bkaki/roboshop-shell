@@ -50,6 +50,7 @@ print_head "Start Catalogue service"
 systemctl daemon-reload
 systemctl enable ${component}
 systemctl restart ${component}
+
 schema_setup
 
 }
