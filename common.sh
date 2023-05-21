@@ -7,33 +7,33 @@ print_head () {
 }
 
 func_nodejs() {
-print_head Download NodeJS repo
+print_head "configuring NodeJS repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-print_head Install NodeJS
+print_head "Install NodeJS"
 yum install nodejs -y
 
-print_head Add Application user
+print_head "Add Application user"
 useradd ${app_user}
 
-create app directory
+create "app directory"
 rm -rf /app
 mkdir /app
 
-print_head Download app content
+print_head "Download app content"
 curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
 
-print_head Unzip app content
+print_head "Unzip app content"
 cd /app
 unzip /tmp/${component}.zip
 
-print_head Install NodJS dependencies
+print_head "Install NodJS dependencies"
 npm install
 
-print_head Copy Catalogue SystemD file
+print_head "Copy Catalogue SystemD file"
 cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
 
-print_head Start Catalogue service
+print_head "Start Catalogue service"
 
 systemctl daemon-reload
 systemctl enable ${component}
