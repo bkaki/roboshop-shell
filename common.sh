@@ -7,15 +7,16 @@ print_head () {
 }
 
 schema_setup() {
-echo -e "\e[36m>>>>>>>>>> Copy MongoDB Repo  <<<<<<<<\e[0m"
-cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
+  if [ "$schema_setup" == "mongo" ]; then
+    print_head "Copy MongoDB Repo"
+    cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
 
-echo -e "\e[36m>>>>>>>> Install Mongodb client >>>>>>\e[om"
+    print_head "Install Mongodb client"
+    yum install mongodb-org-shell -y
 
-yum install mongodb-org-shell -y
-
-echo -e "\e[36m>>>>>>>>> Load Schema <<<<<<<<<\e[0m"
-mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js
+    print_head "Load Schema"
+    mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js
+fi
 }
 
 func_nodejs() {
