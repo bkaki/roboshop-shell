@@ -1,9 +1,11 @@
 app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
+log_file=/tmp/roboshp.log
 
 func_print_head() {
   echo -e "\e[35m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
+  echo -e "\e[35m>>>>>>>>> $1 <<<<<<<<<<\e[0m" &>>$log_file
 }
 
 func_stat_check() {
@@ -35,11 +37,11 @@ fi
   if [ "$schema_setup" == "mysql" ]; then
 
     func_print_head "Install Mysql"
-    yum install mysql -y
+    yum install mysql -y &>>$log_file
     func_stat_check $?
 
     func_print_head "Load schema"
-    mysql -h mysql-dev.bhaskar77.online -uroot -p${mysql_root_password} < /app/schema/${component}.sql
+    mysql -h mysql-dev.bhaskar77.online -uroot -p${mysql_root_password} < /app/schema/${component}.sql &>>$log_file
     func_stat_check $?
 fi
 }
@@ -47,12 +49,12 @@ fi
 Func_app_prereq() {
 
     func_print_head "Add app User"
-    useradd ${app_user} &>>/tmp/roboshop.log
+    useradd ${app_user} &>>$log_file
     func_stat_check $?
 
     func_print_head "Create app directory"
-    rm -rf /app
-    mkdir /app
+    rm -rf /app &>>$log_file
+    mkdir /app &>>$log_file
     func_stat_check $?
 
     func_print_head "Download app content"
@@ -61,37 +63,37 @@ Func_app_prereq() {
 
     func_print_head "Extract app content"
     cd /app
-    unzip /tmp/${component}.zip
+    unzip /tmp/${component}.zip &>>$log_file
     func_stat_check $?
 }
 
 func_systemd_setup() {
 
   func_print_head "Setup systemd service file"
-  cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
+  cp ${script_path}/${component}.service /etc/systemd/system/${component}.service &>>$log_file
   func_stat_check $?
 
   func_print_head "Start service file"
-  systemctl daemon-reload
-  systemctl enable ${component}
-  systemctl restart ${component}
+  systemctl daemon-reload &>>$log_file
+  systemctl enable ${component} &>>$log_file
+  systemctl restart ${component} &>>$log_file
   func_stat_check $?
 
 }
 
 func_nodejs() {
   func_print_head "configuring NodeJS repo"
-  curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
   func_stat_check $?
 
   func_print_head "Install NodeJS"
-  yum install nodejs -y
+  yum install nodejs -y &>>$log_file
   func_stat_check $?
 
   func_app_prereq
 
   func_print_head "Install NodJS dependencies"
-  npm install
+  npm install &>>$log_file
   func_stat_check $?
 
   func_schema_setup
@@ -101,16 +103,16 @@ func_nodejs() {
 func_java() {
 
   func_print_head "Install maven"
-  yum install maven -y >/tmp/roboshop.log
+  yum install maven -y &>>$log_file
   func_stat_check $?
 
   Func_app_prereq
 
   func_print_head "Download Maven Dependencies"
-  mvn clean package
+  mvn clean package &>>$log_file
   func_stat_check $?
 
-  mv target/${component}-1.0.jar ${component}.jar
+  mv target/${component}-1.0.jar ${component}.jar &>>$log_file
 
   func_schema_setup
   func_systemd_setup
