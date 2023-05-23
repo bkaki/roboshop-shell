@@ -2,56 +2,89 @@ app_user=roboshop
 script=$(realpath "$0")
 script_path=$(dirname "$script")
 
-print_head () {
+func_print_head() {
   echo -e "\e[35m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
 }
 
-schema_setup() {
+func_schema_setup() {
+
   if [ "$schema_setup" == "mongo" ]; then
-    print_head "Copy MongoDB Repo"
+    func_print_head "Copy MongoDB Repo"
     cp ${script_path}/mongo.repo /etc/yum.repos.d/mongo.repo
 
-    print_head "Install Mongodb client"
+    func_print_head "Install Mongodb client"
     yum install mongodb-org-shell -y
 
-    print_head "Load Schema"
+    func_print_head "Load Schema"
     mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js
+fi
+
+  if [ "$schema_setup" == "mysql" ]; then
+
+    func_print_head "Install Mysql"
+    yum install mysql -y
+
+    func_print_head "Load schema"
+    mysql -h mysql-dev.bhaskar77.online -uroot -p${mysql_root_password} < /app/schema/${component}.sql
 fi
 }
 
+Func_app_prereq() {
+
+   func_print_head "Add app User"
+   useradd ${app_user}
+
+   func_print_head "Create app directory"
+   rm -rf /app
+   mkdir /app
+
+    func_print_head "Download app content"
+    curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
+
+    func_print_head "Extract app content"
+    cd /app
+    unzip /tmp/${component}.zip
+}
+
+func_systemd_setup() {
+
+  func_print_head "Setup systemd service file"
+  cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
+
+  func_print_head "Start service file"
+  systemctl daemon-reload
+  systemctl enable ${component}
+  systemctl restart ${component}
+
+}
+
 func_nodejs() {
-print_head "configuring NodeJS repo"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+  func_print_head "configuring NodeJS repo"
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
-print_head "Install NodeJS"
-yum install nodejs -y
+  func_print_head "Install NodeJS"
+  yum install nodejs -y
 
-print_head "Add Application user"
-useradd ${app_user}
+  func_app_prereq
 
-create "app directory"
-rm -rf /app
-mkdir /app
+  func_print_head "Install NodJS dependencies"
+  npm install
 
-print_head "Download app content"
-curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
+  func_schema_setup
+  func_systemd_setup
+}
 
-print_head "Unzip app content"
-cd /app
-unzip /tmp/${component}.zip
+func_java() {
 
-print_head "Install NodJS dependencies"
-npm install
+  func_print_head "Install maven"
+  yum install maven -y
 
-print_head "Copy Catalogue SystemD file"
-cp ${script_path}/${component}.service /etc/systemd/system/${component}.service
+  Func_app_prereq
 
-print_head "Start Catalogue service"
+  func_print_head "Download Maven Dependencies"
+  mvn clean package
+  mv target/${component}-1.0.jar ${component}.jar
 
-systemctl daemon-reload
-systemctl enable ${component}
-systemctl restart ${component}
-
-schema_setup
-
+  func_schema_setup
+  func_systemd_setup
 }
