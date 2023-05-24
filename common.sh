@@ -94,8 +94,6 @@ func_nodejs() {
   yum install nodejs -y &>>$log_file
   func_stat_check $?
 
-  func_app_prereq
-
   func_print_head "Install NodJS dependencies"
   npm install &>>$log_file
   func_stat_check $?
