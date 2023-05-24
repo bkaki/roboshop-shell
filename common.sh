@@ -32,7 +32,7 @@ func_schema_setup() {
     func_stat_check $?
 
     func_print_head "Load Schema"
-    mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js
+    mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js &>>$log_file
     func_stat_check $?
 fi
 
