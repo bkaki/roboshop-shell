@@ -62,7 +62,7 @@ Func_app_prereq() {
     func_stat_check $?
 
     func_print_head "Download app content"
-    curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
+    curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>$log_file
     func_stat_check $?
 
     func_print_head "Extract app content"
@@ -101,6 +101,7 @@ func_nodejs() {
   func_stat_check $?
 
   func_schema_setup
+
   func_systemd_setup
 }
 
