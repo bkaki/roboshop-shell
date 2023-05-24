@@ -4,10 +4,11 @@ script_path=$(dirname "$script")
 log_file=/tmp/roboshp.log
 #rm -f $log_file
 
+
 func_print_head() {
   echo -e "\e[35m>>>>>>>>> $1 <<<<<<<<<<\e[0m"
   echo -e "\e[35m>>>>>>>>> $1 <<<<<<<<<<\e[0m" &>>$log_file
-}
+ }
 
 func_stat_check() {
      if [ $1 -eq 0 ]; then
@@ -17,7 +18,7 @@ func_stat_check() {
         echo "refer the log file /tmp/roboshop.log for more information"
         exit 1
       fi
-}
+ }
 
 func_schema_setup() {
 
@@ -47,7 +48,7 @@ fi
 fi
 }
 
-Func_app_prereq() {
+func_app_prereq() {
 
     func_print_head "Add app User"
     id ${app_user} &>>/tmp/roboshop.log
@@ -86,6 +87,7 @@ func_systemd_setup() {
 }
 
 func_nodejs() {
+
   func_print_head "configuring NodeJS repo"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>$log_file
   func_stat_check $?
@@ -94,11 +96,11 @@ func_nodejs() {
   yum install nodejs -y &>>$log_file
   func_stat_check $?
 
+  func_app_prereq
+
   func_print_head "Install NodJS dependencies"
   npm install &>>$log_file
   func_stat_check $?
-
-  func_app_prereq
 
   func_schema_setup
 
