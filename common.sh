@@ -98,6 +98,8 @@ func_nodejs() {
   npm install &>>$log_file
   func_stat_check $?
 
+  func_app_prereq
+
   func_schema_setup
 
   func_systemd_setup
@@ -109,7 +111,7 @@ func_java() {
   yum install maven -y &>>$log_file
   func_stat_check $?
 
-  Func_app_prereq
+  func_app_prereq
 
   func_print_head "Download Maven Dependencies"
   mvn clean package &>>$log_file
