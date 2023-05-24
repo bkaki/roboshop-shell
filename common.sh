@@ -50,9 +50,9 @@ fi
 Func_app_prereq() {
 
     func_print_head "Add app User"
-    id ${app_user} &>>$log_file
+    id ${app_user} &>>/tmp/roboshop.log
     if [ $? -ne 0 ]; then
-      useradd ${app_user} &>>$log_file
+      useradd ${app_user} &>>/tmp/roboshop.log
     fi
     func_stat_check $?
 
