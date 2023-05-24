@@ -28,7 +28,7 @@ func_schema_setup() {
     func_stat_check $?
 
     func_print_head "Install Mongodb client"
-    yum install mongodb-org-shell -y
+    yum install mongodb-org-shell -y &>>$log_file
     func_stat_check $?
 
     func_print_head "Load Schema"
