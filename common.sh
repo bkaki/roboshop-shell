@@ -30,7 +30,9 @@ func_schema_setup() {
 
     func_print_head "Install Mongodb client"
     yum install mongodb-org-shell -y &>>$log_file
-    func_stat_check $?
+    func_stat_check $?dnf install mysql -y
+
+
 
     func_print_head "Load Schema"
     mongo --host mongodb-dev.bhaskar77.online </app/schema/${component}.js &>>$log_file
